@@ -1,0 +1,35 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CD-parser-initial-page
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on: workflow_dispatch
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:            
+
+  deploy-parser-initial-page:
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy to machine 1
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PARSER_INI_HOST_1 }}
+          username: ${{ secrets.PARSER_INI_USER_1 }}
+          password: ${{ secrets.PARSER_INI_PASS_1 }}
+          script: |
+            docker login -u ${{ secrets.TREESCALE_USER }} -p ${{ secrets.TREESCALE_API_KEY }} repo.treescale.com && \
+            (docker stop tibia-auction-parser-initial-page01 || true ) && \
+            (docker rm -f tibia-auction-parser-initial-page01 || true )  && \
+            docker pull repo.treescale.com/rfaita/tibia-parser-initial-page:latest && \
+            docker run -d --restart unless-stopped \
+            --network host \
+            -e MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}" \
+            -e RABBITMQ_HOST=${{ secrets.RABBITMQ_HOST }} \
+            -e RABBITMQ_QUEUE=${{ secrets.RABBITMQ_QUEUE }} \
+            -e RABBITMQ_USER=${{ secrets.RABBITMQ_USER }} \
+            -e RABBITMQ_PASS="${{ secrets.RABBITMQ_PASS }}" \
+            -e RABBITMQ_EXCHANGE=${{ secrets.RABBITMQ_EXCHANGE }} \
+            --name tibia-auction-parser-initial-page01 repo.treescale.com/rfaita/tibia-parser-initial-page:latest
+      

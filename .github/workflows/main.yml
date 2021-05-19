@@ -1,0 +1,100 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on: push
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build-page:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        name: Set up Node.JS 14
+        with:
+          node-version: '14'
+      - name: Build Site
+        run: cd site && npm ci --only=production && npm run build && cp -r build/* ../backend/public && cd ..
+        env:
+          REACT_APP_API_URL: 
+          CI: false
+      - name: Login to Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: registry.heroku.com
+          username: ${{ secrets.HEROKU_EMAIL }}
+          password: ${{ secrets.HEROKU_API_KEY }}
+      - name: Build and push
+        uses: docker/build-push-action@v2.3.0
+        with:
+          context: backend
+          tags: registry.heroku.com/exiva-auctioneer/web:latest
+          push: true
+      - name: Login to Heroku Container registry
+        env: 
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login 
+      - name: Release to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:release -a exiva-auctioneer web
+  
+  build-parser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: repo.treescale.com
+          username: ${{ secrets.TREESCALE_USER }}
+          password: ${{ secrets.TREESCALE_API_KEY }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2.3.0
+        with:
+          push: true
+          tags: repo.treescale.com/rfaita/tibia-parser:latest
+          context: parser
+      
+      
+  build-notification:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: repo.treescale.com
+          username: ${{ secrets.TREESCALE_USER }}
+          password: ${{ secrets.TREESCALE_API_KEY }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2.3.0
+        with:
+          push: true
+          tags: repo.treescale.com/rfaita/tibia-notification:latest
+          context: notification      
+
+  build-parser-initial-page:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to Docker Registry
+        uses: docker/login-action@v1
+        with:
+          registry: repo.treescale.com
+          username: ${{ secrets.TREESCALE_USER }}
+          password: ${{ secrets.TREESCALE_API_KEY }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2.3.0
+        with:
+          push: true
+          tags: repo.treescale.com/rfaita/tibia-parser-initial-page:latest
+          context: parser-initial-page
+      

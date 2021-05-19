@@ -1,0 +1,22 @@
+version: "3.4"
+
+services:
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - network01
+
+  rabbitmq:
+    build:
+      context: rabbitmq
+      dockerfile: Dockerfile
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - network01
+
+networks:
+  network01:

@@ -1,0 +1,21 @@
+version: "3.4"
+services:
+  auction-parser:
+    build:
+      context: parser
+      dockerfile: Dockerfile
+    
+
+  auction-parser-initial-page:
+    build:
+      context: parser-initial-page
+      dockerfile: Dockerfile
+    
+
+  auction-backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    

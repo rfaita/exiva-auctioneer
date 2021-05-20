@@ -3,7 +3,6 @@ const compression = require('compression');
 const http = require('http');
 const path = require('path');
 const cors = require('cors');
-const sslRedirect = require('heroku-ssl-redirect');
 
 const mongoose = require('mongoose');
 
@@ -42,7 +41,19 @@ db.once('open', () => {
 
 const app = express();
 
-app.use(sslRedirect());
+app.use(function (req, res, next) {
+    if (['production'].indexOf(process.env.NODE_ENV) >= 0) {
+        if (req.headers['x-forwarded-proto'] != 'https') {
+            res.redirect(status, 'https://' + req.hostname + req.originalUrl);
+        }
+        else {
+            next();
+        }
+    }
+    else {
+        next();
+    }
+});
 
 app.use(cors())
 app.use(express.static('public'))

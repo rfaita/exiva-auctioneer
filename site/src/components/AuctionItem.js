@@ -278,7 +278,7 @@ const AuctionItem = (props) => {
                                                                   } odd="true" />
                                                                   <AuctionText label="End At" value={
                                                                         <Fragment>
-                                                                              {props.auction.auction.endDate - new Date().getTime() > 30 * 60 * 1000 || props.auction.auction.status !== 'ongoing' ?
+                                                                              {props.auction.auction.endDate - new Date().getTime() > 59 * 60 * 1000 || props.auction.auction.status !== 'ongoing' ?
                                                                                     <Moment format="MMM DD YYYY HH:mm:ss">
                                                                                           {props.auction.auction.endDate}
                                                                                     </Moment>

@@ -3,6 +3,7 @@ const compression = require('compression');
 const http = require('http');
 const path = require('path');
 const cors = require('cors');
+const sslRedirect = require('heroku-ssl-redirect');
 
 const mongoose = require('mongoose');
 
@@ -24,7 +25,7 @@ const mongoPass = encodeURIComponent(process.env.MONGO_PASS || '');
 let mongoConnection = '';
 if (!!mongoFullURL) {
     mongoConnection = mongoFullURL;
-}else if (!!mongoUser) {
+} else if (!!mongoUser) {
     mongoConnection = `mongodb://${mongoUser}:${mongoPass}@${mongoHost}/${mongoDb}?authSource=admin&w=1`;
 } else {
     mongoConnection = `mongodb://${mongoHost}/${mongoDb}`;
@@ -41,13 +42,7 @@ db.once('open', () => {
 
 const app = express();
 
-// * Application-Level Middleware * //
-
-// Third-Party Middleware
-
-//app.use(cors());
-
-// Built-In Middleware
+app.use(sslRedirect());
 
 app.use(cors())
 app.use(express.static('public'))
@@ -59,7 +54,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/auction', auction.router);
 app.use('/api/notification', notification.router);
 
-app.get('/*', (req, res) => res.sendfile('index.html' , { root : 'public' } ))
+app.get('/*', (req, res) => res.sendFile('index.html', { root: 'public' }))
 
 // * Start * //
 

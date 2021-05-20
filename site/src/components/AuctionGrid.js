@@ -9,6 +9,10 @@ const useStyles = makeStyles((theme) => ({
     },
     sad: {
         marginRight: theme.spacing(1),
+    },
+    emptyMessage: {
+        fontSize: 20,
+        textAlign: 'center'
     }
 }));
 
@@ -35,7 +39,7 @@ const AuctionGrid = (props) => {
                     :
                     <div>
                         {!props.loading &&
-                            <Typography variant="body1">
+                            <Typography classsName={classes.emptyMessage} variant="body1">
                                 {props.emptyMessage}
                             </Typography>}
                     </div>

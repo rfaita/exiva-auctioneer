@@ -86,7 +86,7 @@ export default function Auctions(props) {
     return (
         <Fragment>
             <AuctionGrid auctions={auctions} loading={loading} lastElementRef={lastElementRef} openDetailDialog={openDetailDialog} refreshAuctions={refreshAuctions} token={token}
-                emptyMessage="Your search do not return auctions, try another query" />
+                emptyMessage="There are no auctions to show using these filters." />
             <AuctionDialog auctionId={auctionId} open={openDialog} handleClose={handleCloseDialog} />
         </Fragment>
     );

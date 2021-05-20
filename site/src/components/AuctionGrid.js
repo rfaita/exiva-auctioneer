@@ -39,7 +39,7 @@ const AuctionGrid = (props) => {
                     :
                     <div>
                         {!props.loading &&
-                            <Typography classsName={classes.emptyMessage} variant="body1">
+                            <Typography className={classes.emptyMessage} variant="body1">
                                 {props.emptyMessage}
                             </Typography>}
                     </div>

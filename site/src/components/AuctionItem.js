@@ -286,7 +286,7 @@ const AuctionItem = (props) => {
                                                                               }
                                                                         </Fragment>
                                                                   } />
-                                                                  <AuctionText label={!!props.auction.auction.hasBid ? props.auction.auction.status === "finished" ? "Winning Bid" : "Current Bid" : "Minimum Bid"} value={props.auction.auction.value} odd="true" />
+                                                                  <AuctionText label={!!props.auction.auction.hasBid ? props.auction.auction.status === "finished" ? "Win. Bid" : "Curr. Bid" : "Min. Bid"} value={props.auction.auction.value} odd="true" />
                                                                   <AuctionText label="Status" value={props.auction.auction.status} />
                                                             </div>
                                                       </Grid>

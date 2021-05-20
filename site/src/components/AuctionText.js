@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     generalSpan: {
         fontWeight: 'bold',
         display: 'inline-block',
-        width: 90
+        width: 69
     },
     generalSpanLarge: {
         fontWeight: 'bold',

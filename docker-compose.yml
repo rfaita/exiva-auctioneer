@@ -4,7 +4,7 @@ services:
     image: repo.treescale.com/rfaita/tibia-parser:latest
     deploy:
       mode: replicated
-      replicas: 5
+      replicas: 3
     environment:
       - RABBITMQ_QUEUE=${RABBITMQ_QUEUE}
       - RABBITMQ_HOST=${RABBITMQ_HOST}
@@ -29,7 +29,7 @@ services:
     image: repo.treescale.com/rfaita/tibia-notification:latest
     deploy:
       mode: replicated
-      replicas: 5
+      replicas: 2
     environment:
       - RABBITMQ_QUEUE=${RABBITMQ_QUEUE}
       - RABBITMQ_HOST=${RABBITMQ_HOST}

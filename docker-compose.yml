@@ -1,21 +1,39 @@
 version: "3.4"
 services:
   auction-parser:
-    build:
-      context: parser
-      dockerfile: Dockerfile
+    image: repo.treescale.com/rfaita/tibia-parser:latest
+    deploy:
+      mode: replicated
+      replicas: 5
+    environment:
+      - RABBITMQ_QUEUE=${RABBITMQ_QUEUE}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASS=${RABBITMQ_PASS}
+      - MONGO_FULL_URL=${MONGO_FULL_URL}
     
 
   auction-parser-initial-page:
-    build:
-      context: parser-initial-page
-      dockerfile: Dockerfile
-    
+    image: repo.treescale.com/rfaita/tibia-parser-initial-page:latest
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment:
+      - RABBITMQ_QUEUE=${RABBITMQ_QUEUE}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASS=${RABBITMQ_PASS}
+      - MONGO_FULL_URL=${MONGO_FULL_URL}
 
-  auction-backend:
-    build:
-      context: backend
-      dockerfile: Dockerfile
-    ports:
-      - "8081:8081"
-    
+  auction-notification:
+    image: repo.treescale.com/rfaita/tibia-notification:latest
+    deploy:
+      mode: replicated
+      replicas: 5
+    environment:
+      - RABBITMQ_QUEUE=${RABBITMQ_QUEUE}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_USER=${RABBITMQ_USER}
+      - RABBITMQ_PASS=${RABBITMQ_PASS}
+      - MONGO_FULL_URL=${MONGO_FULL_URL}
+      - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}

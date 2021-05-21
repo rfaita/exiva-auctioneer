@@ -1,0 +1,22 @@
+name: CD-notification
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on: workflow_dispatch
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:            
+
+  deploy-parser-initial-page:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: deploy to swarm cluster
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SWARM_HOST }}
+          keys: ${{ secrets.SWARM_SSH_KEY }}
+          script: |
+            docker login -u ${{ secrets.TREESCALE_USER }} -p ${{ secrets.TREESCALE_API_KEY }} repo.treescale.com && \
+            (docker stack remove exiva-auctioneer || true ) && \
+            docker stack deploy --with-registry-auth --compose-file docker-compose.yml

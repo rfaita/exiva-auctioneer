@@ -22,13 +22,13 @@ jobs:
             (docker stack remove exiva-auctioneer || true ) && sleep 10 && \
             env MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}" \
                 MONGO_HOST="${{ secrets.MONGO_HOST }}" \
-                MONGO_DB="${{ secrets.MONGO_DB }}"" \
+                MONGO_DB="${{ secrets.MONGO_DB }}" \
                 MONGO_USER="${{ secrets.MONGO_USER }}" \
                 MONGO_PASS="${{ secrets.MONGO_PASS }}" \
                 RABBITMQ_HOST="${{ secrets.RABBITMQ_HOST }}" \
                 RABBITMQ_QUEUE="${{ secrets.RABBITMQ_QUEUE }}" \
                 RABBITMQ_USER="${{ secrets.RABBITMQ_USER }}" \
                 RABBITMQ_PASS="${{ secrets.RABBITMQ_PASS }}" \
-                RABBITMQ_EXCHANGE="${{ secrets.RABBITMQ_EXCHANGE }}"" \
+                RABBITMQ_EXCHANGE="${{ secrets.RABBITMQ_EXCHANGE }}" \
                 GOOGLE_APPLICATION_CREDENTIALS='${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' \
             docker stack deploy --with-registry-auth --compose-file docker-compose.yml exiva-auctioneer

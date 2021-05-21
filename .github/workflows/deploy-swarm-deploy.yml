@@ -15,6 +15,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SWARM_HOST }}
+          username: ubuntu
           key: ${{ secrets.SWARM_SSH_KEY }}
           script: |
             docker login -u ${{ secrets.TREESCALE_USER }} -p ${{ secrets.TREESCALE_API_KEY }} repo.treescale.com && \

@@ -17,10 +17,10 @@ jobs:
           username: ${{ secrets.PARSER_USER_1 }}
           password: ${{ secrets.PARSER_PASS_1 }}
           script: |
-            docker login -u ${{ secrets.TREESCALE_USER }} -p ${{ secrets.TREESCALE_API_KEY }} repo.treescale.com && \
+            docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_API_KEY }} docker.io && \
             (docker stop tibia-auction-notification01 || true ) && \
             (docker rm -f tibia-auction-notification01 || true )  && \
-            docker pull repo.treescale.com/rfaita/tibia-notification:latest && \
+            docker pull exivadocker.io/rfaita/exiva-notification:latest && \
             docker run -d --restart unless-stopped \
             --network host \
             -e MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}" \
@@ -34,7 +34,7 @@ jobs:
             -e RABBITMQ_PASS="${{ secrets.RABBITMQ_PASS }}" \
             -e RABBITMQ_EXCHANGE=${{ secrets.RABBITMQ_EXCHANGE }} \
             -e GOOGLE_APPLICATION_CREDENTIALS='${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' \
-            --name tibia-auction-notification01 repo.treescale.com/rfaita/tibia-notification:latest
+            --name tibia-auction-notification01 exivadocker.io/rfaita/exiva-notification:latest
       - name: deploy to machine 2
         uses: appleboy/ssh-action@master
         with:
@@ -42,10 +42,10 @@ jobs:
           username: ${{ secrets.PARSER_USER_2 }}
           password: ${{ secrets.PARSER_PASS_2 }}
           script: |
-            docker login -u ${{ secrets.TREESCALE_USER }} -p ${{ secrets.TREESCALE_API_KEY }} repo.treescale.com && \
+            docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_API_KEY }} docker.io && \
             (docker stop tibia-auction-notification01 || true ) && \
             (docker rm -f tibia-auction-notification01 || true )  && \
-            docker pull repo.treescale.com/rfaita/tibia-notification:latest && \
+            docker pull exivadocker.io/rfaita/exiva-notification:latest && \
             docker run -d --restart unless-stopped \
             --network host \
             -e MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}" \
@@ -59,7 +59,7 @@ jobs:
             -e RABBITMQ_PASS="${{ secrets.RABBITMQ_PASS }}" \
             -e RABBITMQ_EXCHANGE=${{ secrets.RABBITMQ_EXCHANGE }} \
             -e GOOGLE_APPLICATION_CREDENTIALS='${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' \
-            --name tibia-auction-notification01 repo.treescale.com/rfaita/tibia-notification:latest
+            --name tibia-auction-notification01 exivadocker.io/rfaita/exiva-notification:latest
       - name: deploy to machine 3
         uses: appleboy/ssh-action@master
         with:
@@ -67,10 +67,10 @@ jobs:
           username: ${{ secrets.PARSER_USER_3 }}
           password: ${{ secrets.PARSER_PASS_3 }}
           script: |
-            docker login -u ${{ secrets.TREESCALE_USER }} -p ${{ secrets.TREESCALE_API_KEY }} repo.treescale.com && \
+            docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_API_KEY }} docker.io && \
             (docker stop tibia-auction-notification01 || true ) && \
             (docker rm -f tibia-auction-notification01 || true )  && \
-            docker pull repo.treescale.com/rfaita/tibia-notification:latest && \
+            docker pull exivadocker.io/rfaita/exiva-notification:latest && \
             docker run -d --restart unless-stopped \
             --network host \
             -e MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}" \
@@ -84,7 +84,7 @@ jobs:
             -e RABBITMQ_PASS="${{ secrets.RABBITMQ_PASS }}" \
             -e RABBITMQ_EXCHANGE=${{ secrets.RABBITMQ_EXCHANGE }} \
             -e GOOGLE_APPLICATION_CREDENTIALS='${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' \
-            --name tibia-auction-notification01 repo.treescale.com/rfaita/tibia-notification:latest
+            --name tibia-auction-notification01 exivadocker.io/rfaita/exiva-notification:latest
       - name: deploy to machine 4
         uses: appleboy/ssh-action@master
         with:
@@ -92,10 +92,10 @@ jobs:
           username: ${{ secrets.PARSER_USER_4 }}
           password: ${{ secrets.PARSER_PASS_4 }}
           script: |
-            docker login -u ${{ secrets.TREESCALE_USER }} -p ${{ secrets.TREESCALE_API_KEY }} repo.treescale.com && \
+            docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_API_KEY }} docker.io && \
             (docker stop tibia-auction-notification01 || true ) && \
             (docker rm -f tibia-auction-notification01 || true )  && \
-            docker pull repo.treescale.com/rfaita/tibia-notification:latest && \
+            docker pull exivadocker.io/rfaita/exiva-notification:latest && \
             docker run -d --restart unless-stopped \
             --network host \
             -e MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}" \
@@ -109,7 +109,7 @@ jobs:
             -e RABBITMQ_PASS="${{ secrets.RABBITMQ_PASS }}" \
             -e RABBITMQ_EXCHANGE=${{ secrets.RABBITMQ_EXCHANGE }} \
             -e GOOGLE_APPLICATION_CREDENTIALS='${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' \
-            --name tibia-auction-notification01 repo.treescale.com/rfaita/tibia-notification:latest
+            --name tibia-auction-notification01 exivadocker.io/rfaita/exiva-notification:latest
       - name: deploy to machine 5
         uses: appleboy/ssh-action@master
         with:
@@ -117,10 +117,10 @@ jobs:
           username: ${{ secrets.PARSER_USER_5 }}
           password: ${{ secrets.PARSER_PASS_5 }}
           script: |
-            docker login -u ${{ secrets.TREESCALE_USER }} -p ${{ secrets.TREESCALE_API_KEY }} repo.treescale.com && \
+            docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_API_KEY }} docker.io && \
             (docker stop tibia-auction-notification01 || true ) && \
             (docker rm -f tibia-auction-notification01 || true )  && \
-            docker pull repo.treescale.com/rfaita/tibia-notification:latest && \
+            docker pull exivadocker.io/rfaita/exiva-notification:latest && \
             docker run -d --restart unless-stopped \
             --network host \
             -e MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}" \
@@ -134,4 +134,4 @@ jobs:
             -e RABBITMQ_PASS="${{ secrets.RABBITMQ_PASS }}" \
             -e RABBITMQ_EXCHANGE=${{ secrets.RABBITMQ_EXCHANGE }} \
             -e GOOGLE_APPLICATION_CREDENTIALS='${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' \
-            --name tibia-auction-notification01 repo.treescale.com/rfaita/tibia-notification:latest    
+            --name tibia-auction-notification01 exivadocker.io/rfaita/exiva-notification:latest    

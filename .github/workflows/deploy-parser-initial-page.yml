@@ -19,10 +19,10 @@ jobs:
           username: ${{ secrets.PARSER_INI_USER_1 }}
           password: ${{ secrets.PARSER_INI_PASS_1 }}
           script: |
-            docker login -u ${{ secrets.TREESCALE_USER }} -p ${{ secrets.TREESCALE_API_KEY }} repo.treescale.com && \
+            docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_API_KEY }} docker.io && \
             (docker stop tibia-auction-parser-initial-page01 || true ) && \
             (docker rm -f tibia-auction-parser-initial-page01 || true )  && \
-            docker pull repo.treescale.com/rfaita/tibia-parser-initial-page:latest && \
+            docker pull docker.io/rfaita/exiva-parser-initial-page:latest && \
             docker run -d --restart unless-stopped \
             --network host \
             -e MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}" \
@@ -31,5 +31,5 @@ jobs:
             -e RABBITMQ_USER=${{ secrets.RABBITMQ_USER }} \
             -e RABBITMQ_PASS="${{ secrets.RABBITMQ_PASS }}" \
             -e RABBITMQ_EXCHANGE=${{ secrets.RABBITMQ_EXCHANGE }} \
-            --name tibia-auction-parser-initial-page01 repo.treescale.com/rfaita/tibia-parser-initial-page:latest
+            --name tibia-auction-parser-initial-page01 docker.io/rfaita/exiva-parser-initial-page:latest
       

@@ -19,10 +19,10 @@ jobs:
           username: ${{ secrets.PARSER_USER_1 }}
           password: ${{ secrets.PARSER_PASS_1 }}
           script: |
-            docker login -u ${{ secrets.TREESCALE_USER }} -p ${{ secrets.TREESCALE_API_KEY }} repo.treescale.com && \
+            docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_API_KEY }} docker.io && \
             (docker stop tibia-auction-parser01 || true ) && \
             (docker rm -f tibia-auction-parser01 || true )  && \
-            docker pull repo.treescale.com/rfaita/tibia-parser:latest && \
+            docker pull docker.io/rfaita/exiva-parser:latest && \
             docker run -d --restart unless-stopped \
             --network host \
             -e MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}" \
@@ -35,7 +35,7 @@ jobs:
             -e RABBITMQ_USER=${{ secrets.RABBITMQ_USER }} \
             -e RABBITMQ_PASS="${{ secrets.RABBITMQ_PASS }}" \
             -e RABBITMQ_EXCHANGE=${{ secrets.RABBITMQ_EXCHANGE }} \
-            --name tibia-auction-parser01 repo.treescale.com/rfaita/tibia-parser:latest
+            --name tibia-auction-parser01 docker.io/rfaita/exiva-parser:latest
       - name: deploy to machine 2
         uses: appleboy/ssh-action@master
         with:
@@ -43,10 +43,10 @@ jobs:
           username: ${{ secrets.PARSER_USER_2 }}
           password: ${{ secrets.PARSER_PASS_2 }}
           script: |
-            docker login -u ${{ secrets.TREESCALE_USER }} -p ${{ secrets.TREESCALE_API_KEY }} repo.treescale.com && \
+            docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_API_KEY }} docker.io && \
             (docker stop tibia-auction-parser01 || true ) && \
             (docker rm -f tibia-auction-parser01 || true )  && \
-            docker pull repo.treescale.com/rfaita/tibia-parser:latest && \
+            docker pull docker.io/rfaita/exiva-parser:latest && \
             docker run -d --restart unless-stopped \
             --network host \
             -e MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}" \
@@ -59,7 +59,7 @@ jobs:
             -e RABBITMQ_USER=${{ secrets.RABBITMQ_USER }} \
             -e RABBITMQ_PASS="${{ secrets.RABBITMQ_PASS }}" \
             -e RABBITMQ_EXCHANGE=${{ secrets.RABBITMQ_EXCHANGE }} \
-            --name tibia-auction-parser01 repo.treescale.com/rfaita/tibia-parser:latest
+            --name tibia-auction-parser01 docker.io/rfaita/exiva-parser:latest
       - name: deploy to machine 3
         uses: appleboy/ssh-action@master
         with:
@@ -67,10 +67,10 @@ jobs:
           username: ${{ secrets.PARSER_USER_3 }}
           password: ${{ secrets.PARSER_PASS_3 }}
           script: |
-            docker login -u ${{ secrets.TREESCALE_USER }} -p ${{ secrets.TREESCALE_API_KEY }} repo.treescale.com && \
+            docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_API_KEY }} docker.io && \
             (docker stop tibia-auction-parser01 || true ) && \
             (docker rm -f tibia-auction-parser01 || true )  && \
-            docker pull repo.treescale.com/rfaita/tibia-parser:latest && \
+            docker pull docker.io/rfaita/exiva-parser:latest && \
             docker run -d --restart unless-stopped \
             --network host \
             -e MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}" \
@@ -83,7 +83,7 @@ jobs:
             -e RABBITMQ_USER=${{ secrets.RABBITMQ_USER }} \
             -e RABBITMQ_PASS="${{ secrets.RABBITMQ_PASS }}" \
             -e RABBITMQ_EXCHANGE=${{ secrets.RABBITMQ_EXCHANGE }} \
-            --name tibia-auction-parser01 repo.treescale.com/rfaita/tibia-parser:latest
+            --name tibia-auction-parser01 docker.io/rfaita/exiva-parser:latest
       - name: deploy to machine 4
         uses: appleboy/ssh-action@master
         with:
@@ -91,10 +91,10 @@ jobs:
           username: ${{ secrets.PARSER_USER_4 }}
           password: ${{ secrets.PARSER_PASS_4 }}
           script: |
-            docker login -u ${{ secrets.TREESCALE_USER }} -p ${{ secrets.TREESCALE_API_KEY }} repo.treescale.com && \
+            docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_API_KEY }} docker.io && \
             (docker stop tibia-auction-parser01 || true ) && \
             (docker rm -f tibia-auction-parser01 || true )  && \
-            docker pull repo.treescale.com/rfaita/tibia-parser:latest && \
+            docker pull docker.io/rfaita/exiva-parser:latest && \
             docker run -d --restart unless-stopped \
             --network host \
             -e MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}" \
@@ -107,7 +107,7 @@ jobs:
             -e RABBITMQ_USER=${{ secrets.RABBITMQ_USER }} \
             -e RABBITMQ_PASS="${{ secrets.RABBITMQ_PASS }}" \
             -e RABBITMQ_EXCHANGE=${{ secrets.RABBITMQ_EXCHANGE }} \
-            --name tibia-auction-parser01 repo.treescale.com/rfaita/tibia-parser:latest
+            --name tibia-auction-parser01 docker.io/rfaita/exiva-parser:latest
       - name: deploy to machine 5
         uses: appleboy/ssh-action@master
         with:
@@ -115,10 +115,10 @@ jobs:
           username: ${{ secrets.PARSER_USER_5 }}
           password: ${{ secrets.PARSER_PASS_5 }}
           script: |
-            docker login -u ${{ secrets.TREESCALE_USER }} -p ${{ secrets.TREESCALE_API_KEY }} repo.treescale.com && \
+            docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_API_KEY }} docker.io && \
             (docker stop tibia-auction-parser01 || true ) && \
             (docker rm -f tibia-auction-parser01 || true )  && \
-            docker pull repo.treescale.com/rfaita/tibia-parser:latest && \
+            docker pull docker.io/rfaita/exiva-parser:latest && \
             docker run -d --restart unless-stopped \
             --network host \
             -e MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}" \
@@ -131,5 +131,5 @@ jobs:
             -e RABBITMQ_USER=${{ secrets.RABBITMQ_USER }} \
             -e RABBITMQ_PASS="${{ secrets.RABBITMQ_PASS }}" \
             -e RABBITMQ_EXCHANGE=${{ secrets.RABBITMQ_EXCHANGE }} \
-            --name tibia-auction-parser01 repo.treescale.com/rfaita/tibia-parser:latest
+            --name tibia-auction-parser01 docker.io/rfaita/exiva-parser:latest
       

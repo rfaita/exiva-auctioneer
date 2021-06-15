@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "amqplib": "^0.7.1",
+    "express": "^4.17.1",
+    "express-actuator": "^1.7.0",
     "firebase-admin": "^9.8.0",
     "luxon": "^1.26.0",
     "mongoose": "^5.12.0"

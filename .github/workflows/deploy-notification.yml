@@ -33,4 +33,4 @@ jobs:
             --set secrets.MONGO_FULL_URL=$MONGO_FULL_URL \
             --set secrets.RABBITMQ_PASS=$RABBITMQ_PASS \
             --set configmap.GOOGLE_APPLICATION_CREDENTIALS='${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' \
-            exiva-notification /home/ubuntu/charts/notification
+            exiva-notification /home/ubuntu/charts/notification/chart

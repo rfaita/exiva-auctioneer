@@ -1,4 +1,4 @@
-FROM arm64v8/node:current-alpine
+FROM node
 WORKDIR /root/code
 
 COPY . .

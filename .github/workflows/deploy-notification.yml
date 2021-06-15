@@ -25,9 +25,12 @@ jobs:
           username: ubuntu
           key: ${{ secrets.K8S_KEY }}
           script: |
+            export MONGO_FULL_URL=$(echo ${{ secrets.MONGO_FULL_URL }} | base64) && \
+            export RABBITMQ_PASS=$(echo ${{ secrets.RABBITMQ_PASS }} | base64) && \
+            export GOOGLE_APPLICATION_CREDENTIALS=$(echo ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} | base64) && \
             sudo helm uninstall exiva-notification && \
             sudo helm install --wait \
-            --set secrets.MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}" \
-            --set secrets.RABBITMQ_PASS="${{ secrets.RABBITMQ_PASS }}" \
-            --set secrets.GOOGLE_APPLICATION_CREDENTIALS='${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' \
+            --set secrets.MONGO_FULL_URL=$MONGO_FULL_URL \
+            --set secrets.RABBITMQ_PASS=$RABBITMQ_PASS \
+            --set secrets.GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS \
             exiva-notification /home/ubuntu/charts/notification

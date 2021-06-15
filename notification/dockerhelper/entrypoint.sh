@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 echo "---------------------------------OPTS------------------------------------"
 echo "WAIT_FOR_IT="$WAIT_FOR_IT

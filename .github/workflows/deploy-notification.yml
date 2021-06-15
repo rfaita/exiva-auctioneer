@@ -18,7 +18,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.K8S_KEY }}
           source: "notification/chart/*"
-          target: "/home/ubuntu/charts/notification"
+          target: "/home/ubuntu/charts"
       - name: deploy to k8s cluster
         uses: appleboy/ssh-action@master
         with:

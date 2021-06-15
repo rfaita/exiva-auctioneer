@@ -7,9 +7,10 @@ on: workflow_dispatch
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:            
 
-  deploy-parser-initial-page:
+  deploy-notification:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: copy chart to k8s cluster
         uses: appleboy/scp-action@master
         with:

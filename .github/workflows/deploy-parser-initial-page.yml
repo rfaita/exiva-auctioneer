@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: CD-parser-initial-page
 
 # Controls when the action will run. Triggers the workflow on push or pull request
@@ -9,27 +7,24 @@ on: workflow_dispatch
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:            
 
-  deploy-parser-initial-page:
+  deploy-notification:
     runs-on: ubuntu-latest
     steps:
-      - name: deploy to machine 1
+      - uses: actions/checkout@v2
+      - name: copy chart to k8s cluster
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.K8S_HOST }}
+          username: ubuntu
+          key: ${{ secrets.K8S_KEY }}
+          source: "parser-initial-page/chart/*"
+          target: "/home/ubuntu/charts"
+      - name: deploy to k8s cluster
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.PARSER_INI_HOST_1 }}
-          username: ${{ secrets.PARSER_INI_USER_1 }}
-          password: ${{ secrets.PARSER_INI_PASS_1 }}
+          host: ${{ secrets.K8S_HOST }}
+          username: ubuntu
+          key: ${{ secrets.K8S_KEY }}
           script: |
-            docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_API_KEY }} docker.io && \
-            (docker stop tibia-auction-parser-initial-page01 || true ) && \
-            (docker rm -f tibia-auction-parser-initial-page01 || true )  && \
-            docker pull docker.io/rfaita/exiva-parser-initial-page:latest && \
-            docker run -d --restart unless-stopped \
-            --network host \
-            -e MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}" \
-            -e RABBITMQ_HOST=${{ secrets.RABBITMQ_HOST }} \
-            -e RABBITMQ_QUEUE=${{ secrets.RABBITMQ_QUEUE }} \
-            -e RABBITMQ_USER=${{ secrets.RABBITMQ_USER }} \
-            -e RABBITMQ_PASS="${{ secrets.RABBITMQ_PASS }}" \
-            -e RABBITMQ_EXCHANGE=${{ secrets.RABBITMQ_EXCHANGE }} \
-            --name tibia-auction-parser-initial-page01 docker.io/rfaita/exiva-parser-initial-page:latest
-      
+            cd /home/ubuntu/charts/parser-initial-page/ && \
+            sudo helm upgrade --install --wait --set secrets.MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}",secrets.RABBITMQ_PASS=${{ secrets.RABBITMQ_PASS }} exiva-parser-initial-page chart

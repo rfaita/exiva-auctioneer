@@ -241,3 +241,12 @@ function rescheduleConsumer(exchangeName, queueName) {
         startConsumer(channel, exchangeName, queueName);
     }, 15 * MINUTE_MILLIS_CONST)
 }
+
+const express = require('express')
+const actuator = require('express-actuator')
+
+const app = express()
+
+app.use(actuator())
+
+app.listen(8080)

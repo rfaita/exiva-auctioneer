@@ -168,6 +168,13 @@ amqp.connect(rabbitMqConnection, function (error0, connection) {
     });
 });
 
+const express = require('express')
+const actuator = require('express-actuator')
 
+const app = express()
+
+app.use(actuator())
+
+app.listen(8080)
 
 

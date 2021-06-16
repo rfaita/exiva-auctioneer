@@ -27,6 +27,4 @@ jobs:
           key: ${{ secrets.K8S_KEY }}
           script: |
             cd /home/ubuntu/charts/notification/ && \
-            export MONGO_FULL_URL=$(echo "${{ secrets.MONGO_FULL_URL }}" | base64) && \
-            export RABBITMQ_PASS=$(echo "${{ secrets.RABBITMQ_PASS }}" | base64) && \
-            sudo helm upgrade --install --wait --set secrets.MONGO_FULL_URL="$MONGO_FULL_URL",secrets.RABBITMQ_PASS=$RABBITMQ_PASS,configmap.GOOGLE_APPLICATION_CREDENTIALS='${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' exiva-notification chart
+            sudo helm upgrade --install --wait --set secrets.MONGO_FULL_URL="${{ secrets.MONGO_FULL_URL }}",secrets.RABBITMQ_PASS=${{ secrets.RABBITMQ_PASS }},configmap.GOOGLE_APPLICATION_CREDENTIALS='${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}' exiva-notification chart

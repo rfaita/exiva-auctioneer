@@ -75,7 +75,7 @@ amqp.connect(rabbitMqConnection, function (error0, connection) {
 
 function createExchangeAndQueue(exchangeName, queueName) {
     console.log(` [x] Creating exchange ${exchangeName}`);
-    channel.assertExchange(exchangeName, {
+    channel.assertExchange(exchangeName, 'fanout', {
         autoDelete: false,
         durable: true,
         passive: true,

@@ -75,13 +75,10 @@ amqp.connect(rabbitMqConnection, function (error0, connection) {
 
 function createExchangeAndQueue(exchangeName, queueName) {
     console.log(` [x] Creating exchange ${exchangeName}`);
-    channel.assertExchange(exchangeName, 'x-delayed-message', {
+    channel.assertExchange(exchangeName, {
         autoDelete: false,
         durable: true,
         passive: true,
-        arguments: {
-            'x-delayed-type': 'direct'
-        }
     })
 
     console.log(` [x] Creating queue ${queueName}`);

@@ -59,7 +59,7 @@ tolerations: []
 affinity: {}
 
 configmap:  
-  RABBITMQ_HOST: "10.0.1.22"
+  RABBITMQ_HOST: "10.0.1.22:5672"
   RABBITMQ_PORT: "5672"
   RABBITMQ_USER: rfaita
   GOOGLE_APPLICATION_CREDENTIALS: empty

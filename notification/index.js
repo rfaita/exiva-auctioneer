@@ -48,6 +48,8 @@ if (!!rabbitmqUser) {
 
 let channel;
 
+console.log(`rabbitmq connect: ${rabbitMqConnection}`);
+
 amqp.connect(rabbitMqConnection, function (error0, connection) {
     if (error0) {
         throw error0;

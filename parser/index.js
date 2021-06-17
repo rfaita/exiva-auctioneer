@@ -222,7 +222,7 @@ function startConsumer(exchangeName, queueName) {
         const auction = await extractAndSaveAuction(JSON.parse(msg.content));
 
         if (auction.auction.status == 'requeue') {
-            enqueue(channel, exchangeName, queueName, msg.content);
+            enqueue(exchangeName, queueName, msg.content);
             channel.cancel(consumerTag);
             rescheduleConsumer(channel, exchangeName, queueName);
             console.log(` [x] I worked too much, I will take a break...`);

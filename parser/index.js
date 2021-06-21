@@ -191,7 +191,6 @@ function sendNotification(message) {
 }
 
 function enqueue(channel, exchange, queue, message, priority) {
-    console.log(` [x] Enqueued: ${exchange} -> ${message.toString()}`);
     if (priority <= 0) {
         channel.publish(exchange, queue, new Buffer.from(message));
     } else {

@@ -190,7 +190,7 @@ function sendNotification(message) {
     enqueue(notificationExchangeName, notificationQueueName, JSON.stringify(message));
 }
 
-function enqueue(channel, exchange, queue, message, priority) {
+function enqueue(exchange, queue, message, priority) {
     if (priority <= 0) {
         channel.publish(exchange, queue, new Buffer.from(message));
     } else {
@@ -198,8 +198,6 @@ function enqueue(channel, exchange, queue, message, priority) {
     }
 
 }
-
-
 
 function createExchangeAndQueue(exchangeName, queueName) {
     console.log(` [x] Creating exchange ${exchangeName}`);

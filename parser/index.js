@@ -75,6 +75,7 @@ amqp.connect(rabbitMqConnection, function (error0, connection) {
 
 
 const MINUTE_MILLIS_CONST = 60000;
+let parsingCompleteAuctions = true;
 
 async function extractAndSaveAuction(message) {
 
@@ -94,7 +95,11 @@ async function extractAndSaveAuction(message) {
             if (!!currentCharAuctionModel && !!currentCharAuctionModel.name) {
                 return updateAuction(message, currentCharAuctionModel);
             } else {
-                return saveNewAuction(_id);
+                if (parsingCompleteAuctions) {
+                    return saveNewAuction(_id);
+                } else {
+                    return { _id: '' + _id, auction: { status: 'requeue' } };
+                }
             }
         }
     }
@@ -185,9 +190,14 @@ function sendNotification(message) {
     enqueue(notificationExchangeName, notificationQueueName, JSON.stringify(message));
 }
 
-function enqueue(exchange, queue, message) {
+function enqueue(channel, exchange, queue, message, priority) {
     console.log(` [x] Enqueued: ${exchange} -> ${message.toString()}`);
-    channel.publish(exchange, queue, new Buffer.from(message));
+    if (priority <= 0) {
+        channel.publish(exchange, queue, new Buffer.from(message));
+    } else {
+        channel.publish(exchange, queue, new Buffer.from(message), { priority: priority });
+    }
+
 }
 
 
@@ -222,10 +232,12 @@ function startConsumer(exchangeName, queueName) {
         const auction = await extractAndSaveAuction(JSON.parse(msg.content));
 
         if (auction.auction.status == 'requeue') {
-            enqueue(exchangeName, queueName, msg.content);
-            channel.cancel(consumerTag);
-            rescheduleConsumer(channel, exchangeName, queueName);
-            console.log(` [x] I worked too much, I will take a break...`);
+            enqueue(exchangeName, queueName, msg.content, 99);
+            if (!parsingCompleteAuctions) {
+                parsingCompleteAuctions = false;
+                rescheduleParseCompleteAuctions(channel, exchangeName, queueName);
+                console.log(` [x] I will only parse old auctions.`);
+            }            
         } else {
             console.log(` [x] Done: ${msg.content.toString()}`);
         }
@@ -235,10 +247,10 @@ function startConsumer(exchangeName, queueName) {
     }, { consumerTag: consumerTag });
 }
 
-function rescheduleConsumer(exchangeName, queueName) {
+function rescheduleParseCompleteAuctions() {
     setTimeout(() => {
         console.log(` [x] Let's back to work!!!`);
-        startConsumer(channel, exchangeName, queueName);
+        parsingCompleteAuctions = true;
     }, 15 * MINUTE_MILLIS_CONST)
 }
 
